@@ -1,10 +1,12 @@
 package fastcampus.aop.part4.chapter03_google_map
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.core.view.isVisible
+import fastcampus.aop.part4.chapter03_google_map.MapActivity.Companion.SEARCH_RESULT_EXTRA_KEY
 import fastcampus.aop.part4.chapter03_google_map.databinding.ActivityMainBinding
 import fastcampus.aop.part4.chapter03_google_map.model.LocationLatingEntity
 import fastcampus.aop.part4.chapter03_google_map.model.SearchResultEntity
@@ -35,7 +37,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         initViews()
         bindViews()
         initData()
-//        setData()
     }
 
     private fun initAdapter() {
@@ -70,6 +71,9 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         }
         adapter.setSearchResultList(dataList) {
             Toast.makeText(this,"빌딩이름 : ${it.name} 빌딩주소 : ${it.fullAdress} 위도/경도 : ${it.locationLation}",Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this@MainActivity, MapActivity::class.java).apply {
+                putExtra(SEARCH_RESULT_EXTRA_KEY, it)
+            })
         }
     }
 
